@@ -1,0 +1,24 @@
+# Diretórios e arquivos de build do NetBeans
+/build/
+/nbbuild/
+/dist/
+/nbproject/private/
+
+# Arquivos de configuração do NetBeans
+*.bak
+*.swp
+*.swo
+
+# Arquivos temporários de compilação
+*.class
+
+# Logs
+*.log
+
+# Diretórios de dependências do Maven ou Gradle (caso esteja usando)
+target/
+.gradle/
+
+# Outros arquivos de sistema que podem ser criados pela IDE
+.idea/
+*.iml
