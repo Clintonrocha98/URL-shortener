@@ -22,3 +22,5 @@ target/
 # Outros arquivos de sistema que podem ser criados pela IDE
 .idea/
 *.iml
+
+.env
