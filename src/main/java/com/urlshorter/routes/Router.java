@@ -3,14 +3,14 @@ package com.urlshorter.routes;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.urlshorter.controller.UrlController;
-import com.urlshorter.factory.UrlFactory;
+import com.urlshorter.factory.UrlControllerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class Router implements HttpHandler {
 
-    private UrlController controller = UrlFactory.createController();
+    private UrlController controller = UrlControllerFactory.createController();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {

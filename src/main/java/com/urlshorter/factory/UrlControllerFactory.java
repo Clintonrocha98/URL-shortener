@@ -4,12 +4,11 @@ import com.urlshorter.controller.UrlController;
 import com.urlshorter.repository.UrlRepository;
 import com.urlshorter.service.UrlService;
 
-public class UrlFactory {
+public class UrlControllerFactory {
 
     public static UrlController createController() {
         UrlRepository repo = new UrlRepository();
         UrlService service = new UrlService(repo);
-        UrlController controller = new UrlController(service);
-        return controller;
+        return new UrlController(service);
     }
 }
