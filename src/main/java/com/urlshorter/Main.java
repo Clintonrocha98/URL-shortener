@@ -17,11 +17,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Dotenv dotenv = Dotenv.load();
 
-        int port = dotenv.get("PORTt") != null
-                ? Integer.parseInt(dotenv.get("PORT"))
-                : 8080;
+        String port = dotenv.get("PORT", "8080");
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(port)), 0);
 
         Router router = new Router();
 
@@ -31,6 +29,6 @@ public class Main {
 
         server.start();
 
-        logger.info("O servidor está rodando na porta {}", port); 
+        logger.info("O servidor está rodando na porta {}", port);
     }
 }
