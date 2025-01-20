@@ -9,6 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,6 +71,10 @@ public class UrlServiceTest {
     UrlModel urlModel = new UrlModel();
     urlModel.setKeyUrl(key);
     urlModel.setOriginalUrl("http://example.com");
+    
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime withinDeadline = now.minusDays(2);
+    urlModel.setCreateAt(Timestamp.valueOf(withinDeadline));
 
     when(repositoryMock.findByKey(key)).thenReturn(urlModel);
 
@@ -91,5 +97,24 @@ public class UrlServiceTest {
     assertEquals("item não encontrado", exception.getMessage());
     assertEquals(404, exception.getStatusCode());
     verify(repositoryMock).findByKey(key);
+  }
+
+  @Test
+  @DisplayName("Deve lançar exceção quando o prazo de validade da URL expirar")
+  void testGetUrlDeadlineExpired() throws SQLException {
+    String key = "abc1234567";
+    UrlModel urlModel = new UrlModel();
+    urlModel.setKeyUrl(key);
+    urlModel.setOriginalUrl("http://example.com");
+    urlModel.setCreateAt(Timestamp.valueOf("2025-01-01 10:00:00"));
+
+    when(repositoryMock.findByKey(key)).thenReturn(urlModel);
+
+    UrlException exception = assertThrows(UrlException.class, () -> {
+      service.getUrl(key);
+    });
+
+    assertEquals("Prazo de validade expirado.", exception.getMessage());
+    assertEquals(400, exception.getStatusCode());
   }
 }
