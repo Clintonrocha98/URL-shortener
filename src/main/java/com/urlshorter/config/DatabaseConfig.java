@@ -14,7 +14,7 @@ public class DatabaseConfig {
   private static final String USER = dotenv.get("DB_USER", "sa");
   private static final String PASSWORD = dotenv.get("DB_PASSWORD", "");
 
-  public static Connection getConnection() throws SQLException {
+  public Connection getConnection() throws SQLException {
     if (URL == null || USER == null || PASSWORD == null) {
       throw new IllegalStateException("Variáveis de ambiente para conexão com o banco não configuradas corretamente.");
     }
